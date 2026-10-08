@@ -1,17 +1,18 @@
 import mysql.connector as my
+choice=False
+a=input("want to delete prev data base?")
+if a=="y":
+    choice=True
 pwd=input("enter pass: ")
 db=my.connect(host="localhost",user="root",passwd=pwd)
 cur=db.cursor()
-
-#droping the table to avoid errors
-cur.execute("drop database pharmacy") #comment it if for the first time for now
-
-cur.execute("create database pharmacy")
-
+if choice:
+    cur.execute("drop database pharmacy;")
+cur.execute("create database if not exists pharmacy;")
 #cur.execute("use pharmacy;")
-
+#or (looks cool)
 db.database ="pharmacy"
-cur.execute("create table stock(itemcode int, itemname varchar(30) ,batchno int, mfd date, exp date, stock int);") #the main structure of the table
+cur.execute("create table if not exists stock(itemcode int primary key, itemname varchar(30) ,batchno int, mfd date, exp date, stock int);") #the main structure of the table
 
 
 #massive amount of test data 
