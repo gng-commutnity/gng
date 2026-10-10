@@ -4,3 +4,6 @@ def connection(pwd):
     return con
 def curso(con):
     return con.cursor()
+def close(cur,db):
+    cur.close()
+    db.close()

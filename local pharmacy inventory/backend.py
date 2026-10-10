@@ -3,7 +3,9 @@ import modules.basics
 pw=input("enter your password: ")
 con=modules.connection.connection(pw)
 cur=modules.connection.curso(con)
-
-s=modules.basics.alldata(cur,"stock")
-for i in s:
-    print(i)
+def colname():
+    s=modules.basics.alldata(cur,"stock")
+    return cur.column_names
+def all_data():
+    s=modules.basics.alldata(cur,"stock")
+    return s
