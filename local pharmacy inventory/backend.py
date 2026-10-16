@@ -1,8 +1,16 @@
 import modules.connection
 import modules.basics
-pw=input("enter your password: ")
-con=modules.connection.connection(pw)
-cur=modules.connection.curso(con)
+
+con = None
+cur = None
+
+def passwd(pas):
+    global con, cur
+    pw=pas
+
+    con=modules.connection.connection(pw)
+    cur=modules.connection.curso(con)
+
 def colname():
     s=modules.basics.alldata(cur,"stock")
     return cur.column_names
