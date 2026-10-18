@@ -1,6 +1,5 @@
 import modules.connection
 import modules.basics
-
 con = None
 cur = None
 
@@ -17,3 +16,5 @@ def colname():
 def all_data():
     s=modules.basics.alldata(cur,"stock")
     return s
+def insert_data(data):
+    modules.basics.insertdata(con,cur,"stock",data)
