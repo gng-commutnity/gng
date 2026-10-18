@@ -35,20 +35,20 @@ def everything():
     menu.pack(side="right", fill="y", padx=5, pady=5)
     menu.pack_propagate(False)
 
-    add = ctk.CTkButton(menu, text="Add Medicine")
-    add.pack(fill="x", padx=10, pady=5)
+    edit = ctk.CTkButton(menu, text="Edit",height=80,width=80)
+    edit.pack(pady=5)
 
-    edit = ctk.CTkButton(menu, text="Edit")
-    edit.pack(fill="x", padx=10, pady=5)
+    add = ctk.CTkButton(menu,height=40,width=40, text="Add Medicine",fg_color="transparent")
+    add.pack(pady=5)
 
-    sort = ctk.CTkButton(menu, text="Sort")
-    sort.pack(fill="x", padx=10, pady=5)
+    sort = ctk.CTkButton(menu,height=40,width=40, text="Sort",fg_color="transparent")
+    sort.pack(pady=5)
 
-    remove = ctk.CTkButton(menu, text="Remove")
-    remove.pack(fill="x", padx=10, pady=5)
+    remove = ctk.CTkButton(menu,height=40,width=40, text="Remove",fg_color="transparent")
+    remove.pack(pady=5)
 
-    export = ctk.CTkButton(menu, text="Export")
-    export.pack(fill="x", padx=10, pady=5)
+    export = ctk.CTkButton(menu,height=40,width=40, text="Export",fg_color="transparent")
+    export.pack(pady=5)
 
 
     table=ctk.CTkFrame(content, corner_radius=10)
@@ -92,6 +92,7 @@ title = ctk.CTkLabel(
 title.pack(padx=30, pady=(25, 20))
 
 def login():
+    password_entry.unbind("<Return>")
     password = password_entry.get()
     backend.passwd(password)
 
@@ -114,7 +115,6 @@ ok = ctk.CTkButton(
     command=login
 )
 ok.pack(pady=15)
-
 
 
 app.mainloop()
