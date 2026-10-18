@@ -10,11 +10,53 @@ app.geometry("1910x1000")
 
 
 def everything():
+    def update_table():
+        for widget in scroll.winfo_children():
+            widget.destroy()
+
+        data = backend.all_data()
+
+        def add_next(roww=0):
+            if roww >= len(data):
+                return
+
+            for col in range(len(colname)):
+                add_row(col, roww, data[roww][col])
+
+            app.after(30, lambda: add_next(roww + 1))
+
+        add_next()
+
     def adddataframe():
-        h=app.winfo_width()
-        w=app.winfo_height()
-        dataframe=ctk.CTkFrame(app,corner_radius=20,height=h*0.8,width=w*0.8,fg_color="gray")
+        i=0
+        l=[]
+        def thenext():
+            nonlocal i
+            if i==4:
+                nextt.configure(text="submit")
+            if i==0 or i==2 or i==5:
+                l.append(int(ent.get()))
+            else:
+                l.append(ent.get())
+            i+=1
+            ent.delete(0, "end") 
+            try:
+                ent.configure(placeholder_text=t[i])
+            except:
+                dataframe.destroy()
+                backend.insert_data(tuple(l))
+                update_table()
+            
+        t=("itemcode","itemname","batch number","mfd","exp","stock")
+        w=app.winfo_width()
+        h=app.winfo_height()
+        dataframe=ctk.CTkFrame(app,corner_radius=20,height=h*0.3,width=w*0.5,fg_color="gray")
         dataframe.place(relx=0.5, rely=0.5, anchor="center")
+        dataframe.pack_propagate(False)
+        ent=ctk.CTkEntry(dataframe,corner_radius=10,placeholder_text=t[0])
+        ent.place(relx=0.5, rely=0.5, anchor="center")
+        nextt=ctk.CTkButton(dataframe,corner_radius=5,text="next",command=thenext)
+        nextt.place(relx=0.5, rely=0.9, anchor="center")
     def adddata(data):
         backend.insert_data(data)
     
@@ -44,10 +86,10 @@ def everything():
     menu.pack(side="right", fill="y", padx=5, pady=5)
     menu.pack_propagate(False)
 
-    edimg=CTkImage(light_image=Image.open("gng/local pharmacy inventory/assets/pencil-edit-svgrepo-com(1).png"),
-                                  dark_image=Image.open("gng/local pharmacy inventory/assets/pencil-edit-svgrepo-com(1)_dark.png"))
-    adimg=CTkImage(light_image=Image.open("gng/local pharmacy inventory/assets/plus-svgrepo-com.png"),
-                                      dark_image=Image.open("gng/local pharmacy inventory/assets/plus-svgrepo-com_dark.png"))
+    edimg=CTkImage(light_image=Image.open("local pharmacy inventory/assets/pencil-edit-svgrepo-com(1).png"),
+                                  dark_image=Image.open("local pharmacy inventory/assets/pencil-edit-svgrepo-com(1)_dark.png"))
+    adimg=CTkImage(light_image=Image.open("local pharmacy inventory/assets/plus-svgrepo-com.png"),
+                                      dark_image=Image.open("local pharmacy inventory/assets/plus-svgrepo-com_dark.png"))
     edit = ctk.CTkButton(menu, text=None,image=edimg,height=80,width=80)
     edit.pack(pady=5)
 
@@ -83,13 +125,18 @@ def everything():
     for col in range(len(colname)):
         scroll.grid_columnconfigure(col, weight=1, uniform="columns")
 
-    roww = 0
+    data = backend.all_data()
 
-    for j in backend.all_data():
+    def load_rows(roww=0):
+        if roww >= len(data):
+            return
+
         for col in range(len(colname)):
-            add_row(col, roww, j[col])
+            add_row(col, roww, data[roww][col])
 
-        roww += 1
+        app.after(30, lambda: load_rows(roww + 1))
+
+    load_rows()
 login_frame = ctk.CTkFrame(app, fg_color="transparent")
 login_frame.pack(fill="both", expand=True)
 
