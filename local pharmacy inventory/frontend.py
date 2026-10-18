@@ -7,7 +7,7 @@ import modules.connection
 app=ctk.CTk()
 app.title("pharmacy inventory")
 app.geometry("1910x1000")
-
+#testing branch
 
 def everything():
     def update_table():
