@@ -1,4 +1,7 @@
 import customtkinter as ctk
+from customtkinter import CTkImage
+from PIL import ImageTk, Image
+import cv2
 import backend
 import modules.connection
 app=ctk.CTk()
@@ -7,6 +10,13 @@ app.geometry("1910x1000")
 
 
 def everything():
+    def adddataframe():
+        h=app.winfo_width()
+        w=app.winfo_height()
+        dataframe=ctk.CTkFrame(app,corner_radius=20,height=h*0.8,width=w*0.8,fg_color="gray")
+        dataframe.place(relx=0.5, rely=0.5, anchor="center")
+    def adddata(data):
+        backend.insert_data(data)
     
     def add_col(col,name):
         header=ctk.CTkLabel(table, text=name,font=("Arial", 14, "bold"),fg_color="#205E77",corner_radius=5,height=40)
@@ -15,7 +25,6 @@ def everything():
     def add_row(col,row,data):
         cell=ctk.CTkLabel(scroll,text=data,height=35)
         cell.grid(row=row,column=col,sticky="ew",padx=5,pady=5)
-
 
 
     main=ctk.CTkFrame(app,corner_radius=15)
@@ -35,10 +44,14 @@ def everything():
     menu.pack(side="right", fill="y", padx=5, pady=5)
     menu.pack_propagate(False)
 
-    edit = ctk.CTkButton(menu, text="Edit",height=80,width=80)
+    edimg=CTkImage(light_image=Image.open("gng/local pharmacy inventory/assets/pencil-edit-svgrepo-com(1).png"),
+                                  dark_image=Image.open("gng/local pharmacy inventory/assets/pencil-edit-svgrepo-com(1)_dark.png"))
+    adimg=CTkImage(light_image=Image.open("gng/local pharmacy inventory/assets/plus-svgrepo-com.png"),
+                                      dark_image=Image.open("gng/local pharmacy inventory/assets/plus-svgrepo-com_dark.png"))
+    edit = ctk.CTkButton(menu, text=None,image=edimg,height=80,width=80)
     edit.pack(pady=5)
 
-    add = ctk.CTkButton(menu,height=40,width=40, text="Add Medicine",fg_color="transparent")
+    add = ctk.CTkButton(menu,height=40,width=40, text=None,image=adimg,fg_color="transparent",command=adddataframe)
     add.pack(pady=5)
 
     sort = ctk.CTkButton(menu,height=40,width=40, text="Sort",fg_color="transparent")
@@ -77,7 +90,6 @@ def everything():
             add_row(col, roww, j[col])
 
         roww += 1
-
 login_frame = ctk.CTkFrame(app, fg_color="transparent")
 login_frame.pack(fill="both", expand=True)
 
