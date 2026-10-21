@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+    <title>Login page</title>
+</head>
+<body>
+    <header>📷 Barcode Scanner</header>
+    <form action="/" method="POST">
+        <div id="entry">
+            <p>Please enter the password to continue!!</p>
+            <input id="nam" name="password" type="password" placeholder="Password" required autofocus>
+            <button type="submit">Unlock</button>
+            {% if error %}
+            <p style="color: #dc2626;">{{ error }}</p>
+            {% endif %}
+        </div>
+    </form>
+</body>
+</html>
+

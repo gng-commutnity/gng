@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scanner</title>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin: 10px; }
+    #reader { width: 100%; max-width: 400px; margin: auto; }
+    #status { font-size: 20px; margin-top: 15px; }
+    input, button { padding: 12px; font-size: 16px; margin-top: 15px;
+                    border-radius: 8px; border: 1px solid #ccc; }
+    button { background: #2563eb; color: #fff; border: none; }
+  </style>
+</head>
+<body>
+  <h2>Barcode Scanner</h2>
+  <div id="reader"></div>
+
+  <input id="manual" placeholder="Barcode type karo">
+  <button onclick="sendManual()">Send</button>
+
+  <div id="status">Camera started...</div>
+
+  <script>
+    let lastCode = "";
+    let lastTime = 0;
+
+    function send(code) {
+      const now = Date.now();
+      const same = (code === lastCode);
+      const gap = now - lastTime;
+
+      lastCode = code;
+      lastTime = now;
+
+      if (same && gap < 2000) return;
+
+      fetch("/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: code })
+      })
+      .then(() => {
+        document.getElementById("status").innerText = "Send: " + code;
+      })
+      .catch(() => {
+        document.getElementById("status").innerText = "Error: pc connection ,✅";
+      });
+    }
+
+    function sendManual() {
+      const el = document.getElementById("manual");
+      if (el.value.trim()) {
+        send(el.value.trim());
+        el.value = "";
+      }
+      el.focus();
+    }
+
+    document.getElementById("manual").addEventListener("keydown", e => {
+      if (e.key === "Enter") sendManual();
+    });
+
+    const scanner = new Html5Qrcode("reader");
+    scanner.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: { width: 250, height: 150 } },
+      send
+    ).catch(err => {
+      document.getElementById("status").innerText = "Camera error: " + err;
+    });
+  </script>
+</body>
+</html>

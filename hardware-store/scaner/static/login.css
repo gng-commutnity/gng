@@ -1,0 +1,62 @@
+body {
+        font-family: Arial, sans-serif;
+          margin: 0;
+          text-align: center;
+          color: white;
+          background-image: url('photos/bgx.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+          background-attachment: fixed;
+  }
+  header {
+        font-family:'Metal Mania',cursive;
+        font-size:60px;
+        padding:20px;
+        margin-top:40px;
+        letter-spacing:5px;
+  }
+  #entry {
+        background-color: rgba(255,255,255,0.008);
+  /*    width: clamp(200px, 90vw, 700px);*/
+  /*    width:350px;
+        max-width:700px;*/
+        width: 90%;
+        max-width: 700px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        height:200px;
+        padding:20px;
+        margin:0 auto;
+        margin-top:40px;
+        backdrop-filter: blur(15px);
+        border-radius:40px;
+        box-shadow: 0px 0px 20px 5px rgba(0,0,0,0.5);
+
+  }
+  #entry p {
+        font-family:sans-serif;
+        font-size: 18px;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+        opacity: 0.9;
+  }
+  input {
+        width:90%;
+        padding:10px;
+        margin-top:20px;
+        border-radius:20px;
+
+  }
+  button {
+        width:95%;
+          padding:10px;
+          background-color:#007bff;
+        border-radius:15px;
+        margin-top:20px;
+        color:white;
+        border:none;
+  }
+  form button:active {
+    background-color: #0065d1;
+  }
